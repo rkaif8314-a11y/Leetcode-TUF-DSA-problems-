@@ -1,23 +1,19 @@
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        int left = 0;
-        int right = height.size() - 1;
-        int maxWater = 0;
+        int Maxans = 0;
+        int lp = 0, rp = height.size() - 1;
+        while(lp<rp){
+            int wd = rp -lp;
 
-        while (left < right) {
-            int width = right - left;
-            int h = min(height[left], height[right]);
-
-            maxWater = max(maxWater, width * h);
-
-            // Move the pointer with the smaller height
-            if (height[left] < height[right])
-                left++;
-            else
-                right--;
+            int ht  = min(height[lp],height[rp]);
+            int currans= wd*ht;
+             Maxans = max(Maxans,currans);
+            
+            height[lp]<height[rp] ? lp++ : rp--;
         }
+        return Maxans;
 
-        return maxWater;
+        
     }
 };
