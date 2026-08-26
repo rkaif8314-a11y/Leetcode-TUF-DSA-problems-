@@ -10,3 +10,257 @@ public:
         return n1;
     }
 };
+//
+# GCD of Two Numbers
+
+## Problem Statement
+
+Given two integers `n1` and `n2`, find their **Greatest Common Divisor (GCD)**.
+
+The GCD is the largest positive integer that divides both numbers without leaving a remainder.
+
+### Example
+
+```text
+Input:
+n1 = 48
+n2 = 18
+
+Output:
+6
+```
+
+### Explanation
+
+The common divisors of `48` and `18` are:
+
+```text
+1, 2, 3, 6
+```
+
+The greatest one is:
+
+```text
+GCD = 6
+```
+
+---
+
+## Approach — Euclidean Algorithm
+
+We use the following property:
+
+```text
+GCD(n1, n2) = GCD(n2, n1 % n2)
+```
+
+We repeatedly calculate the remainder until `n2` becomes `0`.
+
+When:
+
+```text
+n2 = 0
+```
+
+the value of `n1` is the GCD.
+
+---
+
+## Step-by-Step Example
+
+For:
+
+```text
+n1 = 48
+n2 = 18
+```
+
+### Step 1
+
+```text
+48 % 18 = 12
+```
+
+Update:
+
+```text
+n1 = 18
+n2 = 12
+```
+
+### Step 2
+
+```text
+18 % 12 = 6
+```
+
+Update:
+
+```text
+n1 = 12
+n2 = 6
+```
+
+### Step 3
+
+```text
+12 % 6 = 0
+```
+
+Update:
+
+```text
+n1 = 6
+n2 = 0
+```
+
+Now `n2 == 0`, so:
+
+```text
+GCD = n1 = 6
+```
+
+---
+
+## C++ Solution
+
+```cpp
+class Solution {
+public:
+    int gcd(int n1, int n2) {
+        while (n2 != 0) {
+            int temp = n2;
+            n2 = n1 % n2;
+            n1 = temp;
+        }
+
+        return n1;
+    }
+};
+```
+
+---
+
+## Code Explanation
+
+### 1. Function
+
+```cpp
+int gcd(int n1, int n2)
+```
+
+The function takes two integers:
+
+```text
+n1
+n2
+```
+
+and returns their GCD.
+
+### 2. Loop
+
+```cpp
+while (n2 != 0)
+```
+
+Keep calculating the remainder until `n2` becomes `0`.
+
+### 3. Save `n2`
+
+```cpp
+int temp = n2;
+```
+
+We temporarily save `n2` because its value will be changed.
+
+### 4. Calculate remainder
+
+```cpp
+n2 = n1 % n2;
+```
+
+The new `n2` becomes the remainder.
+
+### 5. Move old `n2` into `n1`
+
+```cpp
+n1 = temp;
+```
+
+Now the values move forward for the next iteration.
+
+### 6. Return GCD
+
+```cpp
+return n1;
+```
+
+When `n2` becomes `0`, `n1` contains the GCD.
+
+---
+
+## Why This Is Fast
+
+A simple approach might check every number from `1` to `min(n1, n2)`, which can be slow for large numbers.
+
+The Euclidean Algorithm reduces the numbers very quickly.
+
+### Time Complexity
+
+```text
+O(log(min(n1, n2)))
+```
+
+### Space Complexity
+
+```text
+O(1)
+```
+
+Only a few variables are used.
+
+---
+
+## Key Pattern to Remember
+
+```text
+n1 = 48
+n2 = 18
+
+n1 % n2 → 12
+       ↓
+n1 = 18
+n2 = 12
+
+18 % 12 → 6
+       ↓
+n1 = 12
+n2 = 6
+
+12 % 6 → 0
+       ↓
+n1 = 6
+n2 = 0
+
+Answer = n1 = 6
+```
+
+### Easy Formula
+
+```text
+GCD(n1, n2) = GCD(n2, n1 % n2)
+```
+
+Repeat until:
+
+```text
+n2 == 0
+```
+
+Then:
+
+```text
+Answer = n1
+```
+
