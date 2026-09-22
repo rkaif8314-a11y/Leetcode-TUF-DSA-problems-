@@ -7,9 +7,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: tuf-dsa-quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   syntax-check:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
       - name: Check C++ solution files
